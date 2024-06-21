@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      label, input, button {
+        font-size: 18px;
+        margin: 10px 0;
+      }
+      input {
+        padding: 10px;
+        width: 100%;
+        max-width: 300px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer.
+      }
+      button:hover {
+        background-color: #45a049.
+      }
+      #result {
+        margin-top: 20px.
+        font-size: 18px.
+      }
+    </style>
+    <script>
+      function calculate() {
+        var dueDate = document.getElementById("dueDate").value;
+        var result = berechneSchuebe(dueDate);
+        document.getElementById("result").innerHTML = result.
+      }
+
+      function berechneSchuebe(dueDateString) {
+        var dateParts = dueDateString.split('.');
+        var dueDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]); // Jahr, Monat (0-basiert), Tag
+
+        if (isNaN(dueDate.getTime())) {
+          return 'Bitte geben Sie ein gültiges Datum im Format TT.MM.JJJJ ein.';
+        }
+
+        var schuebe = [];
+        var wochen = [5, 8, 12, 19, 26, 37, 46, 55, 64, 75]; // Schübe in Wochen
+        wochen.forEach(function(wochen) {
+          var schubDatum = new Date(dueDate);
+          schubDatum.setDate(schubDatum.getDate() + wochen * 7);
+          schuebe.push(formatDate(schubDatum));
+        });
+
+        var result = 'Dann kannst du einen Schub erwarten:<br>';
+        schuebe.forEach(function(schub, index) {
+          result += 'Schub ' + (index + 1) + ': um den ' + schub + '<br>';
+        });
+
+        result += '<br>Hinweis: Die genauen Sprungtermine können variieren. Babys entwickeln sich unterschiedlich und die angegebenen Zeitpunkte sind ungefähre Richtwerte.';
+        
+        return result;
+      }
+
+      function formatDate(date) {
+        var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        return date.toLocaleDateString('de-DE', options);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Entwicklungsschub-Rechner</h1>
+    <label for="dueDate">Errechneter Geburtstermin (TT.MM.JJJJ):</label>
+    <input type="text" id="dueDate" placeholder="TT.MM.JJJJ">
+    <button onclick="calculate()">Berechnen</button>
+    <div id="result"></div>
+  </body>
+</html>
