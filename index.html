@@ -37,6 +37,23 @@
       #result {
         margin-top: 20px;
         font-size: 18px;
+        width: 100%;
+        max-width: 600px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+      .schub {
+        margin: 10px 0;
+        padding: 10px;
+        border-left: 4px solid #4CAF50;
+        background-color: #e7f9f1;
+      }
+      .hinweis {
+        font-size: 14px;
+        color: #666;
+        margin-top: 20px;
       }
     </style>
     <script>
@@ -51,7 +68,7 @@
         var dueDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]); // Jahr, Monat (0-basiert), Tag
 
         if (isNaN(dueDate.getTime())) {
-          return 'Bitte geben Sie ein gültiges Datum im Format TT.MM.JJJJ ein.';
+          return '<div class="error">Bitte geben Sie ein gültiges Datum im Format TT.MM.JJJJ ein.</div>';
         }
 
         var schuebe = [];
@@ -62,12 +79,11 @@
           schuebe.push(formatDate(schubDatum));
         });
 
-        var result = 'Dann kannst du einen Schub erwarten:<br>';
+        var result = '<div><strong>Dann kannst du einen Schub erwarten:</strong><br>';
         schuebe.forEach(function(schub, index) {
-          result += 'Schub ' + (index + 1) + ': um den ' + schub + '<br>';
+          result += '<div class="schub">Schub ' + (index + 1) + ': um den ' + schub + '</div>';
         });
-
-        result += '<br>Hinweis: Die genauen Sprungtermine können variieren. Babys entwickeln sich unterschiedlich und die angegebenen Zeitpunkte sind ungefähre Richtwerte.';
+        result += '</div><div class="hinweis">Hinweis: Die genauen Sprungtermine können variieren. Babys entwickeln sich unterschiedlich und die angegebenen Zeitpunkte sind ungefähre Richtwerte.</div>';
         
         return result;
       }
@@ -86,4 +102,5 @@
     <div id="result"></div>
   </body>
 </html>
+
 
